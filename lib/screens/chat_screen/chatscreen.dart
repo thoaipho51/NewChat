@@ -15,6 +15,7 @@ import 'package:new_chat/resources/auth_methods.dart';
 import 'package:new_chat/screens/arcore_screen.dart';
 import 'package:new_chat/screens/chat_screen/ar_screen.dart';
 import 'package:new_chat/screens/chat_screen/widget/cached_image.dart';
+import 'package:new_chat/screens/full_Image.dart';
 import 'package:new_chat/utils/call_ultilities.dart';
 import 'package:new_chat/utils/permissions.dart';
 import 'package:new_chat/utils/ultilities.dart';
@@ -228,11 +229,16 @@ class _ChatScreenState extends State<ChatScreen> {
         fontSize: 16.0,
       ),
     ) : message.photoUrl != null 
-    ? CachedImage(
-      message.photoUrl,
-      width: 250,
-      height: 250,
-      radius: 10,
+    ? GestureDetector(
+      child: CachedImage(
+        message.photoUrl,
+        width: 250,
+        height: 250,
+        radius: 5,
+      ),
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>FullImageScreen(photoUrl: message.photoUrl)));
+      },
     )
     : Text('No picture');
   }
