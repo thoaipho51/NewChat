@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emoji_picker/emoji_lists.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:new_chat/constant/strings.dart';
 import 'package:new_chat/enum/view_state.dart';
 import 'package:new_chat/models/massage.dart';
@@ -43,9 +45,11 @@ class _ChatScreenState extends State<ChatScreen> {
   final StorageMethods _storageMethods = StorageMethods();
   final ChatMethods _chatMethods = ChatMethods();
   final AuthMethods _authMethods = AuthMethods();
+  var vitriTinNhan = 0;
 
   //Trình đk scroll
   ScrollController _listScrollController = ScrollController();
+  
 
   //Khởi tạo lớp providerimage
   ImageUploadProvider _imageUploadProvider;
@@ -58,6 +62,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   bool isWriting = false;
   bool showEmojiPicker = false;
+  
 
   @override
   void initState() {  
@@ -169,16 +174,18 @@ class _ChatScreenState extends State<ChatScreen> {
           controller: _listScrollController,
           itemCount: snapshot.data.documents.length,
           itemBuilder: (context, index) {
+            vitriTinNhan = index;
             return chatMessageItem(snapshot.data.documents[index]);
+            
           },
         );
       },
     );
   }
+ 
 
    Widget chatMessageItem(DocumentSnapshot snapshot) {
     Message _message = Message.fromMap(snapshot.data);
-
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       child: Container(
@@ -197,23 +204,38 @@ class _ChatScreenState extends State<ChatScreen> {
     Radius messageRadius = Radius.circular(10);
 
     //Trả về khối tin nhắn sender
-    return Container(
-      margin: EdgeInsets.only(top: 12),
-      constraints:
-          // Đoạn này giữ cho đoạn tin nhắn không vượt quá giá trị <ở đây là 65% màn hình>
-          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
-      decoration: BoxDecoration(
-        color: UniversalVariables.senderColor,
-        borderRadius: BorderRadius.only(
-          topLeft: messageRadius,
-          topRight: messageRadius,
-          bottomLeft: messageRadius,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 12),
+          constraints:
+              // Đoạn này giữ cho đoạn tin nhắn không vượt quá giá trị <ở đây là 65% màn hình>
+              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
+          decoration: BoxDecoration(
+            color: UniversalVariables.senderColor,
+            borderRadius: BorderRadius.only(
+              topLeft: messageRadius,
+              topRight: messageRadius,
+              bottomLeft: messageRadius,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child:  getMessage(message),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child:  getMessage(message),
-      ),
+        Container(
+          padding: EdgeInsets.all(5),
+          
+          child:Text(
+            partTime(message.timestamp),
+              style: TextStyle(color: Colors.white, fontSize: 12)
+            // message.timestamp.toDate().month.toString()
+          ),
+        ),
+        
+      ],
     );
   }
 
@@ -246,23 +268,43 @@ class _ChatScreenState extends State<ChatScreen> {
   // Widget bố cục tin nhắn phía người nhận
   Widget receiverLayout(Message message ) {
     Radius messageRadius = Radius.circular(10);
-
-    return Container(
-      margin: EdgeInsets.only(top: 12),
-      constraints:
-          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
-      decoration: BoxDecoration(
-        color: UniversalVariables.receiverColor,
-        borderRadius: BorderRadius.only(
-          bottomRight: messageRadius,
-          topRight: messageRadius,
-          bottomLeft: messageRadius,
+    bool flag = null;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onDoubleTap: (){
+           
+          },
+          child: Container(
+            margin: EdgeInsets.only(top: 12),
+            constraints:
+                BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
+            decoration: BoxDecoration(
+              color: UniversalVariables.receiverColor,
+              borderRadius: BorderRadius.only(
+                bottomRight: messageRadius,
+                topRight: messageRadius,
+                bottomLeft: messageRadius,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child:  getMessage(message),
+            ),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child:  getMessage(message),
-      ),
+        Container(
+            padding: EdgeInsets.all(5),
+            
+            child:Text(
+              partTime(message.timestamp),
+              style: TextStyle(color: Colors.white, fontSize: 12)
+              // message.timestamp.toDate().month.toString()
+            ),
+          ),
+
+      ],
     );
   }
   pickImage({@required ImageSource source}) async {
@@ -529,6 +571,18 @@ class _ChatScreenState extends State<ChatScreen> {
         )
       ],
     );
+  }
+
+  String partTime(Timestamp time){
+    var day = time.toDate().day.toString();
+    var month=  time.toDate().month.toString();
+    var year = time.toDate().year.toString();
+    var h = time.toDate().hour.toString();
+    var p = time.toDate().minute.toString();
+    var s = time.toDate().second.toString();
+    // String a = 'Ngày '+ day + '/' + month + '/' + year + ' | '+h+':'+p;
+    String a = h+':'+p;
+    return a;
   }
 }
 

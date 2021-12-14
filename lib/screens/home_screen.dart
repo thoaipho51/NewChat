@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:new_chat/enum/user_state.dart';
 import 'package:new_chat/provider/user_provider.dart';
 import 'package:new_chat/resources/auth_methods.dart';
