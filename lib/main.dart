@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
 
     //test đăng xuất
     // ko bỏ dồng này sẽ bị đăng xuất vĩnh viễn =))
-    // _repository.signOut();
+    // _authMethods.signOut();
 
     return MultiProvider(
       providers: [

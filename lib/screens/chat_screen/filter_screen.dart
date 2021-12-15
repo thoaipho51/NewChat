@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:new_chat/configs/api_key.dart';
 
 
-class ArScreen extends StatefulWidget {
+class FillterScreen extends StatefulWidget {
 
   @override
-  _ArScreenState createState() => _ArScreenState();
+  _FillterScreenState createState() => _FillterScreenState();
 }
 
-class _ArScreenState extends State<ArScreen> {
+class _FillterScreenState extends State<FillterScreen> {
   CameraDeepArController cameraDeepArController;
   int currentPage = 0;
   // final vp PageController(viewportFraction: .25);

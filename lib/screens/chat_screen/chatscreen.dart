@@ -15,7 +15,7 @@ import 'package:new_chat/models/user.dart';
 import 'package:new_chat/provider/image_upload_provider.dart';
 import 'package:new_chat/resources/auth_methods.dart';
 import 'package:new_chat/screens/arcore_screen.dart';
-import 'package:new_chat/screens/chat_screen/ar_screen.dart';
+import 'package:new_chat/screens/chat_screen/filter_screen.dart';
 import 'package:new_chat/screens/chat_screen/widget/cached_image.dart';
 import 'package:new_chat/screens/full_Image.dart';
 import 'package:new_chat/utils/call_ultilities.dart';
@@ -273,9 +273,7 @@ class _ChatScreenState extends State<ChatScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          onDoubleTap: (){
-           
-          },
+          // onDoubleTap: (){},
           child: Container(
             margin: EdgeInsets.only(top: 12),
             constraints:
@@ -494,7 +492,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: GestureDetector(
                     child: Icon(CupertinoIcons.wand_stars,),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ArScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>FillterScreen()));
                     } 
                   ),
                 ),
@@ -567,7 +565,12 @@ class _ChatScreenState extends State<ChatScreen> {
           icon: Icon(
             CupertinoIcons.phone,
           ),
-          onPressed: () {},
+         onPressed: () async => await Permissions.cameraAndMicrophonePermissionsGranted() 
+          ? CallUtils.dialAudio(
+            from: sender,
+            to: widget.receiver,
+            context: context
+          ):{},
         )
       ],
     );
