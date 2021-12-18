@@ -5,6 +5,7 @@ import 'package:new_chat/provider/user_provider.dart';
 import 'package:new_chat/resources/auth_methods.dart';
 import 'package:new_chat/screens/home_screen.dart';
 import 'package:new_chat/screens/login_screen.dart';
+// import 'package:new_chat/screens/login_screen.dart'; // Prj R
 import 'package:new_chat/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
             if (snapshot.hasData) {
               return HomeScreen();
             } else {
-              return LoginScreen();
+              return LoginScreen(); // page login test
             }
           },
         ),

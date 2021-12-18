@@ -73,6 +73,8 @@ class _LogListContainerState extends State<LogListContainer> {
                     hasDialled ? _log.receiverPic : _log.callerPic,
                     isRound: true,
                     radius: 45,
+                    height: 50,
+                    width: 50,
                   ),
                   mini: false,
                   onLongPress: () => showDialog(

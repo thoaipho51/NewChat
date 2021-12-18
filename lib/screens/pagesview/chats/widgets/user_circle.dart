@@ -20,7 +20,7 @@ class UserCircle extends StatelessWidget {
       ),
       child: Container(
         height: 40,
-        width: 40,
+        width: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: UniversalVariables.separatorColor,
@@ -29,17 +29,13 @@ class UserCircle extends StatelessWidget {
           children: <Widget>[
             Align(
               alignment: Alignment.center,
-              // child: Container(
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(20),
-              //   ),
-              //   child: Image.network(userProvider.getUser.profilePhoto),
-              // )
               child: Shimmer.fromColors(
                 baseColor: UniversalVariables.blackColor,
                 highlightColor: Colors.lightBlue,
                 child: Text(
-                Utils.getInitials(userProvider.getUser.name),
+                  userProvider.getUser.name.isEmpty  
+                ? Utils.getInitials(userProvider.getUser.name)
+                : 'Hồ sơ người dùng',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 13,

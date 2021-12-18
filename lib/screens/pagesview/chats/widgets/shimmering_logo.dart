@@ -7,13 +7,13 @@ class ShimmeringLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      width: 50,
+      height: 100,
+      width: 100,
       child: Shimmer.fromColors(
         baseColor: UniversalVariables.blackColor,
         highlightColor: Colors.white,
-        child: Image.network("https://pid.com.vn/wp-content/uploads/2019/07/Logo-LS.png"),
-        period: Duration(seconds: 1),
+        child: Image.asset("assets/logo/new_chat_text.png"),
+        // period: Duration(seconds: 0),
       ),
     );
   }
